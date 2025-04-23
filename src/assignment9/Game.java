@@ -1,31 +1,52 @@
 package assignment9;
 
+import java.awt.Color;
 import java.awt.event.KeyEvent;
 
 import edu.princeton.cs.introcs.StdDraw;
 
 public class Game {
 	
+	private Snake snake;
+	private Food food;
+	private Power power;
+	private int score; 
+	private double pause;
+	private int speed;
+	
 	public Game() {
 		StdDraw.enableDoubleBuffering();
+		snake = new Snake(); 
+		food = new Food();
+		power = new Power();
+		score = 0;
+		pause= 50;
+		speed = 1;
+	}
+	
+	private void drawBackground() {
 		
-		//FIXME - construct new Snake and Food objects
+		StdDraw.setPenColor(new Color(100, 120, 25)); 
+		StdDraw.filledRectangle(0.5, 0.5, 1.0, 1.0); 
 	}
 	
 	public void play() {
-		while (true) { //TODO: Update this condition to check if snake is in bounds
-			int dir = getKeypress();
-			//Testing only: you will eventually need to do more work here
-			System.out.println("Keypress: " + dir);
-			
-			/*
-			 * 1. Pass direction to your snake
-			 * 2. Tell the snake to move
-			 * 3. If the food has been eaten, make a new one
-			 * 4. Update the drawing
-			 */
+		while (snake.isInbounds()) { 
+		int dir = getKeypress(); 
+		snake.changeDirection(dir); 
+		snake.move(); 
+		if (snake.eatFood(food)) { 
+		score += 1; 
+		food = new Food(); 
 		}
-	}
+		if (snake.eatPower(power)) { 
+			pause = pause/1.25;
+			speed += 1;
+			power = new Power(); 
+			}
+		updateDrawing(); 
+		}
+		}
 	
 	private int getKeypress() {
 		if(StdDraw.isKeyPressed(KeyEvent.VK_W)) {
@@ -45,7 +66,16 @@ public class Game {
 	 * Clears the screen, draws the snake and food, pauses, and shows the content
 	 */
 	private void updateDrawing() {
-		//FIXME
+		StdDraw.clear(); 
+		drawBackground(); 
+		snake.draw();
+		food.draw(); 
+		power.draw();
+		StdDraw.setPenColor(Color.BLACK); 
+		StdDraw.text(0.1, 0.9, "Score: " + score); 
+		StdDraw.text(0.85, 0.9, "Speed: " + speed); 
+		StdDraw.show(); 
+		StdDraw.pause((int) pause); 
 		
 		/*
 		 * 1. Clear screen

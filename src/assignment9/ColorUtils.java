@@ -7,7 +7,7 @@ public class ColorUtils {
 	
 	public static Color solidColor() {
 		Random r = new Random();
-		return new Color(r.nextInt(256), r.nextInt(256), r.nextInt(256));
+		return new Color(r.nextInt(1), r.nextInt(180), r.nextInt(1));
 	}
 	
 	private static Color transparent(Color c) {
