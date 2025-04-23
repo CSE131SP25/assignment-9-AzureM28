@@ -22,8 +22,7 @@ public class Food {
 	 * Draws the Food
 	 */
 	public void draw() {
-		double pulseSize = FOOD_SIZE + Math.sin(System.currentTimeMillis() % 1000 / 1000.0 *
-				Math.PI) * 0.005;
+		
 
 		StdDraw.setPenColor(Color.RED);
 		StdDraw.filledCircle(x, y, FOOD_SIZE); 
